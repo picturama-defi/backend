@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
 
-export const ProjectOwner = mongoose.model("ProjectOwner", {
+export const ProjectOwner = mongoose.model("project_owner", {
   publicKey: String,
 });
