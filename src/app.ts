@@ -1,9 +1,11 @@
 import express from "express";
+import { connectToDB } from "./service/db";
+import { addRoutes } from "./service/routes";
 
-const app = express();
+export const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello");
+app.listen(8080, () => {
+  console.log("Connected to server");
+  connectToDB();
+  addRoutes(app);
 });
-
-app.listen(8080, () => console.log("Server running"));
