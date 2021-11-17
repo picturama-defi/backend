@@ -4,11 +4,12 @@ import Film from "./film";
 const bodyParser = require("body-parser");
 const router = express.Router();
 import STATUS from "./status";
+import contract from "./contract";
 
 export const addRoutes = (app: Application) => {
   router.post("/add/film", async (req, res) => {
-    const didSucceed = await Film.add(req.body);
-    if (didSucceed) {
+    const result = await Film.add(req.body);
+    if (result) {
       res.send(STATUS.OK);
     } else {
       res.send(STATUS.FAILED);
@@ -22,6 +23,10 @@ export const addRoutes = (app: Application) => {
     } else {
       res.send(STATUS.FAILED);
     }
+  });
+
+  app.get("/approve-film", async (req, res) => {
+    await contract.addFilm();
   });
 
   app.get("/", (req, res) => {

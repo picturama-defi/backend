@@ -1,4 +1,5 @@
 import Film from "../model/Film";
+import contract from "./contract";
 
 const add = async (filmData: any) => {
   try {
@@ -20,7 +21,18 @@ const getAll = async () => {
   }
 };
 
+const approve = async () => {
+  try {
+    await contract.addFilm();
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export default {
-  getAll,
   add,
+  getAll,
+  approve,
 };
