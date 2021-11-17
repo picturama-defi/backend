@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import config from "../config";
 
 export const connectToDB = async () => {
   console.log("Connecting to db...");
-  await mongoose.connect("mongodb://localhost:27017/picturama");
+  await mongoose.connect(config.MONGO_DB_URL);
   console.log("Connected to db");
 };
