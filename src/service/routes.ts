@@ -1,6 +1,6 @@
 import { Application } from "express";
 import express from "express";
-import Film from "./Film";
+import Film from "./film";
 const bodyParser = require("body-parser");
 const router = express.Router();
 import STATUS from "./status";
