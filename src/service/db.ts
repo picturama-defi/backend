@@ -3,6 +3,6 @@ import config from "../config";
 
 export const connectToDB = async () => {
   console.log("Connecting to db...");
-  await mongoose.connect(config.MONGO_DB_URL);
+  await mongoose.connect(config.mongo_url);
   console.log("Connected to db");
 };
