@@ -26,6 +26,9 @@ export const FilmSchema = new Schema({
     type: [MemberSchema],
     required: true,
   },
+  fundingId: {
+    type: Number,
+  },
 });
 
 const Film = model("Film", FilmSchema);

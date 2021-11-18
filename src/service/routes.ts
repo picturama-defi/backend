@@ -25,8 +25,19 @@ export const addRoutes = (app: Application) => {
     }
   });
 
-  app.get("/approve-film", async (req, res) => {
-    await contract.addFilm();
+  router.post("/approve-film", async (req, res) => {
+    const { id, publicKey } = req.body;
+    const film = await Film.findTargetFund(id);
+    if (film) {
+      console.log("Approving film " + id);
+      //@ts-ignore
+      const fundingId = await contract.addFilm(publicKey, film.targetFund);
+      await Film.updateFundingId(id, Number(fundingId));
+
+      res.send(film);
+    } else {
+      res.send(STATUS.FAILED);
+    }
   });
 
   app.get("/", (req, res) => {
