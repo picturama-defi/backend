@@ -44,6 +44,15 @@ export const addRoutes = (app: Application) => {
     res.send("Server running");
   });
 
+  app.get("/funded-films", async (req, res) => {
+    const fundedFilms = await Film.getFundedFilms();
+    if (fundedFilms) {
+      res.send(fundedFilms);
+    } else {
+      res.send(STATUS.FAILED);
+    }
+  });
+
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use("/", router);

@@ -1,4 +1,5 @@
 import Film from "../model/Film";
+import contract from "./contract";
 
 const add = async (filmData: any) => {
   try {
@@ -16,6 +17,17 @@ const getAll = async () => {
     const allFilms = await Film.find({});
     return allFilms;
   } catch (err) {
+    return false;
+  }
+};
+
+const getFundedFilms = async () => {
+  try {
+    const fundingIds = await contract.getFundedFilms();
+    const allFilms = await Film.find({ fundingId: { $in: fundingIds } });
+    return allFilms;
+  } catch (err) {
+    console.log(err);
     return false;
   }
 };
@@ -54,4 +66,5 @@ export default {
   getAll,
   approve,
   findTargetFund,
+  getFundedFilms,
 };

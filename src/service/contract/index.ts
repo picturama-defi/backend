@@ -39,6 +39,12 @@ const addFilm = async (publicKey: string, targetFund: number) => {
   return res[0].returnValues["id"];
 };
 
+const getFundedFilms = async () => {
+  const res = await contract.methods.getAllProjects().call();
+  const fundedFilmIds = res.map((item: any) => Number(item["id"]));
+  return fundedFilmIds;
+};
+
 const createTransaction = async function (
   publicKey: string,
   targetFund: number
@@ -77,4 +83,5 @@ const createTransaction = async function (
 
 export default {
   addFilm,
+  getFundedFilms,
 };
