@@ -1,9 +1,12 @@
 import express from "express";
 import { connectToDB } from "./service/db";
 import { addRoutes } from "./service/routes";
-import contract from "./service/contract";
+
+const cors = require("cors");
 
 export const app = express();
+
+app.use(cors());
 
 app.listen(8080, () => {
   console.log("Connected to server");

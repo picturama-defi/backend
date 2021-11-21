@@ -5,9 +5,16 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 import STATUS from "./status";
 import contract from "./contract";
+require("dotenv").config();
+
+const PASS_PHRASE = process.env.PASS_PHRASE;
 
 export const addRoutes = (app: Application) => {
   router.post("/add/film", async (req, res) => {
+    if (req.body.passPhrase !== PASS_PHRASE) {
+      res.send(STATUS.FAILED);
+      return;
+    }
     const result = await Film.add(req.body);
     if (result) {
       res.send(STATUS.OK);
@@ -25,16 +32,30 @@ export const addRoutes = (app: Application) => {
     }
   });
 
+  app.get("/film", async (req, res) => {
+    const {
+      query: { id },
+    } = req.body;
+    const film = await Film.findOne(id);
+
+    if (film) {
+      res.send(film);
+    } else {
+      res.send(STATUS.FAILED);
+    }
+
+    res.send("Hello");
+  });
+
   router.post("/approve-film", async (req, res) => {
     const { id, publicKey } = req.body;
-    const film = await Film.findTargetFund(id);
+    const film = await Film.findOne(id);
     if (film) {
       console.log("Approving film " + id);
       //@ts-ignore
-      const fundingId = await contract.addFilm(publicKey, film.targetFund);
-      await Film.updateFundingId(id, Number(fundingId));
-
-      res.send(film);
+      await contract.addFilm(publicKey, film.targetFund, id);
+      await Film.setIsFunded(id, true);
+      res.send(STATUS.OK);
     } else {
       res.send(STATUS.FAILED);
     }

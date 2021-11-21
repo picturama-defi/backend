@@ -24,7 +24,7 @@ const getAll = async () => {
 const getFundedFilms = async () => {
   try {
     const fundingIds = await contract.getFundedFilms();
-    const allFilms = await Film.find({ fundingId: { $in: fundingIds } });
+    const allFilms = await Film.find({ _id: { $in: fundingIds } });
     return allFilms;
   } catch (err) {
     console.log(err);
@@ -32,17 +32,7 @@ const getFundedFilms = async () => {
   }
 };
 
-const approve = async (id: string): Promise<any> => {
-  try {
-    const res = await findTargetFund(id);
-    return res;
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-};
-
-const findTargetFund = async (id: string) => {
+const findOne = async (id: string) => {
   try {
     const res = await Film.findOne({ _id: id });
     return res;
@@ -51,9 +41,9 @@ const findTargetFund = async (id: string) => {
   }
 };
 
-const updateFundingId = async (id: string, fundingId: Number) => {
+const setIsFunded = async (id: string, fundingStatus: Boolean) => {
   try {
-    await Film.updateOne({ _id: id }, { fundingId });
+    await Film.updateOne({ _id: id }, { isFunded: fundingStatus });
     return true;
   } catch (err) {
     return false;
@@ -61,10 +51,9 @@ const updateFundingId = async (id: string, fundingId: Number) => {
 };
 
 export default {
-  updateFundingId,
+  setIsFunded,
   add,
   getAll,
-  approve,
-  findTargetFund,
   getFundedFilms,
+  findOne,
 };

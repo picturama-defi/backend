@@ -25,8 +25,4 @@ export const MemberSchema = new Schema({
     type: String,
     required: true,
   },
-  photoB64: {
-    type: String,
-    requrired: true,
-  },
 });

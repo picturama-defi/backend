@@ -26,8 +26,8 @@ export const FilmSchema = new Schema({
     type: [MemberSchema],
     required: true,
   },
-  fundingId: {
-    type: Number,
+  isFunded: {
+    type: Boolean,
   },
 });
 
