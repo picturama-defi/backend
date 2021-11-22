@@ -33,18 +33,21 @@ export const addRoutes = (app: Application) => {
   });
 
   app.get("/film", async (req, res) => {
-    const {
-      query: { id },
-    } = req.body;
-    const film = await Film.findOne(id);
-
-    if (film) {
-      res.send(film);
-    } else {
+    try {
+      //@ts-ignore
+      const id: string = req.query.id;
+      if (id) {
+        const film = await Film.findOne(id);
+        if (film) {
+          res.send(film);
+        } else {
+          res.send(STATUS.FAILED);
+        }
+      }
+    } catch (err) {
+      console.log(err)
       res.send(STATUS.FAILED);
     }
-
-    res.send("Hello");
   });
 
   router.post("/approve-film", async (req, res) => {
