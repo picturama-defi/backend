@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectToDB = void 0;
 var mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv").config();
-var remote_url = "mongodb+srv://Jithin:".concat(process.env.MONGO_PASSWORD, "@cluster0.p5d7p.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+var remote_url = "mongodb+srv://Jithin:" + process.env.MONGO_PASSWORD + "@cluster0.p5d7p.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 var local_url = "mongodb://localhost:27017/picturama";
 var connectToDB = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
