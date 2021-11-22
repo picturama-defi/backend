@@ -8,7 +8,7 @@ export const app = express();
 
 app.use(cors());
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log("Connected to server");
   connectToDB();
   addRoutes(app);
