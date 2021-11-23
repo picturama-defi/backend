@@ -11,6 +11,9 @@ const PASS_PHRASE = process.env.PASS_PHRASE;
 
 export const addRoutes = (app: Application) => {
   router.post("/add/film", async (req, res) => {
+
+    console.log(req.body)
+
     if (req.body.passPhrase !== PASS_PHRASE) {
       res.send(STATUS.FAILED);
       return;
@@ -56,8 +59,11 @@ export const addRoutes = (app: Application) => {
     //@ts-ignore
     const result = await contract.verifyMessage(message, signature)
 
+    console.log(result)
+
     if (!result) {
       res.send(STATUS.FAILED);
+      return;
     }
 
     const id = message.split(":")[1]
@@ -66,9 +72,8 @@ export const addRoutes = (app: Application) => {
 
     if (film) {
       console.log("Approving film " + id);
-      //@ts-ignore
-      // await contract.addFilm(c, film.targetFund, id);
-      // await Film.setIsFunded(id, true);
+      await contract.addFilm(film.ownerPublicAddress, film.targetFund, id);
+      await Film.setIsFunded(id, true);
       res.send(STATUS.OK);
     } else {
       res.send(STATUS.FAILED);
@@ -81,6 +86,15 @@ export const addRoutes = (app: Application) => {
 
   app.get("/funded-films", async (req, res) => {
     const fundedFilms = await Film.getFundedFilms();
+    if (fundedFilms) {
+      res.send(fundedFilms);
+    } else {
+      res.send(STATUS.FAILED);
+    }
+  });
+
+  app.get("/non-funded-films", async (req, res) => {
+    const fundedFilms = await Film.getNonFundedFilms();
     if (fundedFilms) {
       res.send(fundedFilms);
     } else {

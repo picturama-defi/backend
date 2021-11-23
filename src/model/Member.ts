@@ -25,4 +25,5 @@ export const MemberSchema = new Schema({
     type: String,
     required: true,
   },
+
 });

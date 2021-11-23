@@ -29,6 +29,10 @@ export const FilmSchema = new Schema({
   isFunded: {
     type: Boolean,
   },
+  ownerPublicAddress: {
+    type: String,
+    required: true
+  }
 });
 
 const Film = model("Film", FilmSchema);

@@ -32,6 +32,18 @@ const getFundedFilms = async () => {
     }
 };
 
+const getNonFundedFilms = async () => {
+    try {
+        const fundingIds = await contract.getFundedFilms();
+        const allFilms = await Film.find({ _id: { $nin: fundingIds } });
+        return allFilms;
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+};
+
+
 const findOne = async (id: any) => {
     try {
         const res = await Film.findOne({ _id: id });
@@ -56,4 +68,5 @@ export default {
     getAll,
     getFundedFilms,
     findOne,
+    getNonFundedFilms
 };
