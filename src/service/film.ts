@@ -32,7 +32,7 @@ const getFundedFilms = async () => {
     }
 };
 
-const findOne = async (id: string) => {
+const findOne = async (id: any) => {
     try {
         const res = await Film.findOne({ _id: id });
         return res;

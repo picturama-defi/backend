@@ -51,13 +51,24 @@ export const addRoutes = (app: Application) => {
   });
 
   router.post("/approve-film", async (req, res) => {
-    const { id, publicKey } = req.body;
+    const { message, signature } = req.body;
+
+    //@ts-ignore
+    const result = await contract.verifyMessage(message, signature)
+
+    if (!result) {
+      res.send(STATUS.FAILED);
+    }
+
+    const id = message.split(":")[1]
+
     const film = await Film.findOne(id);
+
     if (film) {
       console.log("Approving film " + id);
       //@ts-ignore
-      await contract.addFilm(publicKey, film.targetFund, id);
-      await Film.setIsFunded(id, true);
+      // await contract.addFilm(c, film.targetFund, id);
+      // await Film.setIsFunded(id, true);
       res.send(STATUS.OK);
     } else {
       res.send(STATUS.FAILED);

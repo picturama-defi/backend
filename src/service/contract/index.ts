@@ -3,7 +3,7 @@ import Abi from "./artifact.json";
 require("dotenv").config();
 import { ethers } from "ethers";
 
-const rpcUrl = config.networks.ganache;
+const rpcUrl = config.networks.localhost;
 const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
 const ownerPrivateKey = process.env.PRIVATE_KEY;
 
@@ -36,7 +36,13 @@ const getFundedFilms = async () => {
   );
 };
 
+const verifyMessage = async (message: string, signature: string) => {
+  const publicKey = await wallet.getAddress()
+  return publicKey == ethers.utils.verifyMessage(message, signature)
+}
+
 export default {
   addFilm,
+  verifyMessage,
   getFundedFilms,
 };
