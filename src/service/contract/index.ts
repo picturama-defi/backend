@@ -23,17 +23,17 @@ const addFilm = async (publicKey: string, targetFund: string, id: string) => {
   if (ownerPrivateKey && publicKey && targetFund) {
     await ramaContract
       .connect(wallet)
-      .addFilm(publicKey, 1000, ethers.utils.formatBytes32String(id));
+      .addProject(ethers.utils.formatBytes32String(id), 1000, publicKey);
     return true;
   }
   return false;
 };
 
 const getFundedFilms = async () => {
-  const res = await ramaContract.getAllProjects();
-  return res.map((item: any) =>
-    ethers.utils.parseBytes32String(item.toString().split(",")[2])
-  );
+  const res = await ramaContract.getAllProjectIds();
+  return res.map((item: any) => {
+    return ethers.utils.parseBytes32String(item)
+  })
 };
 
 const verifyMessage = async (message: string, signature: string) => {
