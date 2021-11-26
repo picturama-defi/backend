@@ -93,6 +93,12 @@ export const addRoutes = (app: Application) => {
     }
   });
 
+  app.get("/funds", async (req, res) => {
+    const fundedFilms = await contract.getFunds();
+    console.log(fundedFilms[0]['amount'].toString());
+    res.send("ok")
+  });
+
   app.get("/non-funded-films", async (req, res) => {
     const fundedFilms = await Film.getNonFundedFilms();
     if (fundedFilms) {

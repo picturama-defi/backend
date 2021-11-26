@@ -36,6 +36,11 @@ const getFundedFilms = async () => {
   })
 };
 
+const getFunds = async () => {
+  const res = await ramaContract.getFunds(ethers.utils.formatBytes32String("619fa5d53f9caa71d73d2795"));
+  return res;
+};
+
 const verifyMessage = async (message: string, signature: string) => {
   const publicKey = await wallet.getAddress()
   return publicKey == ethers.utils.verifyMessage(message, signature)
@@ -45,4 +50,5 @@ export default {
   addFilm,
   verifyMessage,
   getFundedFilms,
+  getFunds
 };
