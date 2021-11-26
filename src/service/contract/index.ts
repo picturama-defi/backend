@@ -23,7 +23,7 @@ const addFilm = async (publicKey: string, targetFund: string, id: string) => {
   if (ownerPrivateKey && publicKey && targetFund) {
     await ramaContract
       .connect(wallet)
-      .addProject(ethers.utils.formatBytes32String(id), 1000, publicKey);
+      .addProject(ethers.utils.formatBytes32String(id), targetFund, publicKey);
     return true;
   }
   return false;
