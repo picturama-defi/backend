@@ -19,7 +19,7 @@ export const FilmSchema = new Schema({
     required: true,
   },
   targetFund: {
-    type: Number,
+    type: String,
     required: true,
   },
   team: {

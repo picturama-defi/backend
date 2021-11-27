@@ -20,12 +20,11 @@ const ramaContract = new ethers.Contract(
 //@ts-ignore
 let wallet = new ethers.Wallet(ownerPrivateKey, provider);
 
-const addFilm = async (publicKey: string, targetFund: number, id: string) => {
+const addFilm = async (publicKey: string, targetFund: string, id: string) => {
   if (ownerPrivateKey && publicKey && targetFund) {
-    console.log(ethers.utils.formatBytes32String(id), targetFund, publicKey)
     await ramaContract
       .connect(wallet)
-      .addProject(ethers.utils.formatBytes32String(id), targetFund, publicKey);
+      .addProject(ethers.utils.formatBytes32String(id), ethers.utils.parseEther(targetFund), publicKey);
     return true;
   }
   return false;
