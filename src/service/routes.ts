@@ -71,8 +71,9 @@ export const addRoutes = (app: Application) => {
     const film = await Film.findOne(id);
 
     if (film) {
-      console.log("Approving film " + id);
-      console.log(film)
+      if (film.isFunded) {
+        res.send(STATUS.FAILED);
+      }
       await contract.addFilm(film.ownerPublicAddress, film.targetFund, id);
       await Film.setIsFunded(id, true);
       res.send(STATUS.OK);
